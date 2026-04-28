@@ -83,16 +83,29 @@ $canEdit = can('manage_master');
     <div class="col-12"><label class="form-label">Alamat</label><textarea name="alamat" id="f_alamat" class="form-control" rows="2"></textarea></div>
     <div class="col-md-3"><label class="form-label">RT</label><input name="rt" id="f_rt" class="form-control"></div>
     <div class="col-md-3"><label class="form-label">RW</label><input name="rw" id="f_rw" class="form-control"></div>
+    <div class="col-12"><hr class="my-2"><h6 class="text-muted"><i class="fa-solid fa-camera me-1"></i> Upload Dokumen (opsional)</h6></div>
+    <div class="col-md-6">
+      <label class="form-label"><i class="fa-solid fa-id-card me-1"></i> Foto KTP <small class="text-muted">(jpg/png/pdf, max 5MB)</small></label>
+      <input type="file" name="foto_ktp" class="form-control" accept="image/*,.pdf">
+      <div id="prev_ktp" class="mt-2"></div>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label"><i class="fa-solid fa-file-image me-1"></i> Foto KK <small class="text-muted">(jpg/png/pdf, max 5MB)</small></label>
+      <input type="file" name="foto_kk" class="form-control" accept="image/*,.pdf">
+      <div id="prev_kk" class="mt-2"></div>
+    </div>
   </div></div>
   <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal">Batal</button><button class="btn btn-primary"><i class="fa-solid fa-save"></i> Simpan</button></div>
 </form>
 </div></div></div>
 
 <script>
+const BASE_UPLOAD = '<?= url('uploads') ?>';
 function resetForm(){
   document.getElementById('f_act').value='add';
   document.getElementById('mTitle').innerText='Tambah Warga';
   ['f_id','f_nik','f_nama','f_tl','f_tgl','f_pek','f_hp','f_email','f_alamat','f_rt','f_rw'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('prev_ktp').innerHTML=''; document.getElementById('prev_kk').innerHTML='';
   document.getElementById('f_kk').value=''; document.getElementById('f_jk').value='L';
   document.getElementById('f_agama').value='Islam'; document.getElementById('f_pend').value='SMA';
   document.getElementById('f_sp').value='Belum Kawin'; document.getElementById('f_sk').value='Anak';
@@ -107,6 +120,8 @@ function editRow(r){
   setVal('f_sp',r.status_perkawinan);setVal('f_sk',r.status_keluarga);
   setVal('f_hp',r.no_hp);setVal('f_email',r.email);setVal('f_alamat',r.alamat);
   setVal('f_rt',r.rt);setVal('f_rw',r.rw);setVal('f_sa',r.status_aktif);
+  document.getElementById('prev_ktp').innerHTML = r.foto_ktp ? `<a href="${BASE_UPLOAD}/ktp/${r.foto_ktp}" target="_blank" class="small"><i class="fa-solid fa-image"></i> Lihat KTP saat ini</a>` : '';
+  document.getElementById('prev_kk').innerHTML  = r.foto_kk  ? `<a href="${BASE_UPLOAD}/kk/${r.foto_kk}" target="_blank" class="small"><i class="fa-solid fa-image"></i> Lihat KK saat ini</a>` : '';
   new bootstrap.Modal(document.getElementById('mForm')).show();
 }
 function viewRow(r){
@@ -123,14 +138,6 @@ function viewRow(r){
     <tr><th>Status Perkawinan</th><td>${r.status_perkawinan||'-'}</td></tr>
     <tr><th>Status Keluarga</th><td>${r.status_keluarga||'-'}</td></tr>
     <tr><th>No HP / Email</th><td>${(r.no_hp||'-')+' / '+(r.email||'-')}</td></tr>
-    <tr><th>Alamat</th><td>${r.alamat||'-'} (RT ${r.rt||'-'}/RW ${r.rw||'-'})</td></tr>
-   </tbody></table>`;
-  document.getElementById('vBody').innerHTML=html;
-  new bootstrap.Modal(document.getElementById('mView')).show();
-}
-</script>
-<?php require_once __DIR__ . '/../../includes/footer.php'; ?>
-No HP / Email</th><td>${(r.no_hp||'-')+' / '+(r.email||'-')}</td></tr>
     <tr><th>Alamat</th><td>${r.alamat||'-'} (RT ${r.rt||'-'}/RW ${r.rw||'-'})</td></tr>
    </tbody></table>`;
   document.getElementById('vBody').innerHTML=html;
