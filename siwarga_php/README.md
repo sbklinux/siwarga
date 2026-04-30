@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SIWARGA - Sistem Informasi Warga Terpadu
 
 Aplikasi web pendataan warga berbasis **PHP + MySQL** siap di-host di **XAMPP**.
@@ -134,6 +133,3 @@ Ketua RT/RW approve → status: approved (siap cetak)
 
 ---
 © SIWARGA v1.0
-=======
-# Here are your Instructions
->>>>>>> 8753782cfd4d26b5d542c41d11fe140607f21fca
